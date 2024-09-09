@@ -33,7 +33,7 @@ ADMINS = [5541564692]
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin'
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
