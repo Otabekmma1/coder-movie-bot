@@ -1,5 +1,2 @@
-# Django uchun web xizmati
-web: gunicorn 'coder_movie_bot.wsgi'
-
-# Telegram bot uchun worker xizmati
+web: gunicorn coder_movie_bot.wsgi --bind 0.0.0.0:$PORT
 worker: python bot.py
