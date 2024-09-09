@@ -14,10 +14,11 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'coder_movie_bot.settings')
 django.setup()
 
 from bot_admin.models import Channel, Movie, User
-from coder_movie_bot import settings
 
+TOKEN = "7511166749:AAEXfRoxFc-LD2UYSb5HczJY8i-3oUCQVSY"
+ADMINS = [5541564692]
 
-bot = Bot(token=settings.TOKEN)
+bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
 
@@ -127,7 +128,7 @@ async def command_start_handler(message: Message, first_name: str):
     user_id = message.from_user.id
 
     if await check_subscription(user_id):
-        is_admin = user_id in settings.ADMINS
+        is_admin = user_id in ADMINS
 
         # Create admin buttons if the user is an admin
         admin_buttons = []
@@ -153,7 +154,7 @@ async def command_start_handler(message: Message, first_name: str):
 @dp.message(lambda message: message.text == "➕ Kino qo'shish")
 async def add_movie_start(message: Message):
     user_id = message.from_user.id
-    if user_id not in settings.ADMINS:
+    if user_id not in ADMINS:
         await message.answer("Sizda kino qo'shish huquqi mavjud emas.")
         return
     user_states[message.from_user.id] = {'state': 'adding_movie', 'step': 'title'}
