@@ -1,0 +1,97 @@
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7511166749)
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 1.287578 seconds and try again... (tryings = 1, bot id = 7511166749)
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 1.800922 seconds and try again... (tryings = 2, bot id = 7511166749)
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 2.578353 seconds and try again... (tryings = 3, bot id = 7511166749)
+INFO:aiogram.dispatcher:Connection established (tryings = 4, bot id = 7511166749)
+INFO:aiogram.event:Update id=217886712 is handled. Duration 1969 ms by bot id=7511166749
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7511166749)
+INFO:aiogram.dispatcher:Connection established (tryings = 1, bot id = 7511166749)
+INFO:aiogram.event:Update id=217886714 is handled. Duration 453 ms by bot id=7511166749
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7511166749)
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 1.341124 seconds and try again... (tryings = 1, bot id = 7511166749)
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 1.849626 seconds and try again... (tryings = 2, bot id = 7511166749)
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+WARNING:aiogram.dispatcher:Sleep for 2.372240 seconds and try again... (tryings = 3, bot id = 7511166749)
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.event:Update id=217886715 is not handled. Duration 0 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886716 is not handled. Duration 0 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.event:Update id=217886717 is handled. Duration 828 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886718 is handled. Duration 406 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886719 is handled. Duration 327 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886720 is handled. Duration 578 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886721 is handled. Duration 1562 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.event:Update id=217886722 is handled. Duration 2639 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.event:Update id=217886723 is handled. Duration 2250 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886724 is handled. Duration 328 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886725 is handled. Duration 296 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.event:Update id=217886726 is handled. Duration 421 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886727 is handled. Duration 500 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886728 is handled. Duration 187 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886729 is handled. Duration 296 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886730 is handled. Duration 343 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886731 is handled. Duration 280 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.event:Update id=217886732 is handled. Duration 453 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.event:Update id=217886733 is handled. Duration 484 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.event:Update id=217886734 is handled. Duration 2000 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886735 is handled. Duration 469 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.event:Update id=217886736 is handled. Duration 405 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886737 is handled. Duration 280 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886738 is handled. Duration 171 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886739 is handled. Duration 156 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886740 is handled. Duration 500 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886741 is handled. Duration 858 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886742 is handled. Duration 484 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886743 is handled. Duration 3467 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.event:Update id=217886744 is handled. Duration 421 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886745 is handled. Duration 281 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
