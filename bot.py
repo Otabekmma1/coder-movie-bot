@@ -3,6 +3,7 @@ import logging
 import sys
 import django
 import os
+import aiohttp
 from aiogram import Bot, Dispatcher
 from aiogram.filters import CommandStart
 from aiogram.types import  Message, InlineKeyboardMarkup, InlineKeyboardButton, \
@@ -10,10 +11,8 @@ from aiogram.types import  Message, InlineKeyboardMarkup, InlineKeyboardButton, 
 from asgiref.sync import sync_to_async
 
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'coder_movie_bot.settings')
-django.setup()
 
-from bot_admin.models import Channel, Movie, User
+
 
 TOKEN = "7511166749:AAEXfRoxFc-LD2UYSb5HczJY8i-3oUCQVSY"
 ADMINS = [5541564692]
@@ -34,18 +33,21 @@ user_states = {}
 
 # Utility functions
 async def check_subscription(user_id):
-    # Asynchronously retrieve all channels from the Django model
-    channels = await sync_to_async(list)(Channel.objects.all())  # Convert the queryset to a list
+    url = 'https://codermovie-admin-production.up.railway.app/api/v1/channels/'
 
-    for channel in channels:
-        try:
-            # Check if the user is a member of the channel
-            chat_member = await bot.get_chat_member(chat_id=channel.channel_url, user_id=user_id)
-            if chat_member.status in ['left', 'kicked']:
-                return False
-        except Exception as e:
-            logging.error(f"Error checking subscription for channel {channel.channel_name}: {e}")
-            return False
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            channels = await response.json()
+
+            for channel in channels:
+                try:
+                    # Check if the user is a member of the channel
+                    chat_member = await bot.get_chat_member(chat_id=channel['channel_url'], user_id=user_id)
+                    if chat_member.status in ['left', 'kicked']:
+                        return False
+                except Exception as e:
+                    logging.error(f"Error checking subscription for channel {channel['channel_name']}: {e}")
+                    return False
     return True
 
 
@@ -60,17 +62,20 @@ async def ensure_subscription(message: Message):
     return True  # User is subscribed
 
 async def get_inline_keyboard_for_channels():
-    channels = Channel.objects.all()  # Using Django ORM to fetch all channels
+    url = 'https://codermovie-admin-production.up.railway.app/api/v1/channels/'
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            channels = await response.json()
 
-    inline_keyboard = []
-    for channel in channels:
-        # Assuming `channel_name` and `channel_url` are fields in your Django model
-        inline_keyboard.append([InlineKeyboardButton(text=f"{channel.channel_name}", url=channel.channel_url)])
+            inline_keyboard = []
+            for channel in channels:
+                # Assuming `channel_name` and `channel_url` are fields in your Django model
+                inline_keyboard.append([InlineKeyboardButton(text=f"{channel.channel_name}", url=channel.channel_url)])
 
-    # Add "A'zo bo'ldim" button
-    inline_keyboard.append([InlineKeyboardButton(text="A'zo bo'ldim", callback_data='azo')])
+            # Add "A'zo bo'ldim" button
+            inline_keyboard.append([InlineKeyboardButton(text="A'zo bo'ldim", callback_data='azo')])
 
-    return InlineKeyboardMarkup(inline_keyboard=inline_keyboard)
+            return InlineKeyboardMarkup(inline_keyboard=inline_keyboard)
 
 
 
@@ -81,26 +86,58 @@ async def delete_previous_inline_message(chat_id, message_id):
     except Exception as e:
         logging.error(f"Failed to delete previous inline message: {e}")
 
+import aiohttp
+
 @dp.message(CommandStart())
 async def start(message: Message):
     user_id = message.from_user.id
-    username = message.from_user.username  # Retrieve the username
+    username = message.from_user.username
 
-    try:
-        # Foydalanuvchini Django modeliga qo'shish
-        await sync_to_async(User.objects.update_or_create)(
-            telegram_id=user_id,
-            defaults={'username': username}
-        )
-    except Exception as e:
-        logging.error(f"Error adding user to Django model: {e}")
-        await message.answer("Foydalanuvchini qo'shishda xatolik yuz berdi.")
-        return
+    # API URL to create or update the user in your Django backend
+    url = 'https://codermovie-admin-production.up.railway.app/api/v1/users/'
 
+    # Prepare the user data payload
+    payload = {
+        'telegram_id': user_id,
+        'username': username,
+    }
+
+    headers = {
+        'Authorization': f'Bearer YOUR_API_TOKEN',  # Replace YOUR_API_TOKEN with your actual token
+        'Content-Type': 'application/json'
+    }
+
+    # Try to create the user
+    async with aiohttp.ClientSession() as session:
+        try:
+            async with session.post(url, json=payload, headers=headers) as response:
+                if response.status == 201:
+                    logging.info(f"User {username} successfully added via API.")
+                elif response.status == 400:
+                    response_text = await response.text()
+                    if "user with this telegram id already exists" in response_text:
+                        logging.info(f"User {username} already exists. Skipping creation.")
+                    else:
+                        logging.error(f"Failed to add user via API: {response.status} - {response_text}")
+                        await message.answer("Foydalanuvchini qo'shishda xatolik yuz berdi.")
+                        return
+                else:
+                    logging.error(f"Failed to add user via API: {response.status}")
+                    await message.answer("Foydalanuvchini qo'shishda xatolik yuz berdi.")
+                    return
+        except Exception as e:
+            logging.error(f"Error communicating with API: {e}")
+            await message.answer("Foydalanuvchini qo'shishda xatolik yuz berdi.")
+            return
+
+    # Ensure the user is subscribed to the required channels
     if not await ensure_subscription(message):
         return  # Stop further execution if the user is not subscribed
 
+    # Call the main command handler after registration and subscription check
     await command_start_handler(message, message.from_user.first_name)
+
+
 async def send_subscription_prompt(message: Message):
     user_id = message.from_user.id
 
@@ -175,19 +212,24 @@ async def save_movie_to_db(user_id):
     if not movie_data:
         return False
 
-    try:
-        await sync_to_async(Movie.objects.create)(
-            title=movie_data['title'],
-            year=movie_data['year'],
-            genre=movie_data['genre'],
-            language=movie_data['language'],
-            code=movie_data['code'],
-            video_file_id=movie_data['video_file_id']
-        )
-        return True
-    except Exception as e:
-        logging.error(f"Error saving movie to database: {e}")
-        return False
+    url = 'https://codermovie-admin-production.up.railway.app/api/v1/movies/'
+
+    async with aiohttp.ClientSession() as session:
+        data = {
+            'title': movie_data['title'],
+            'year': movie_data['year'],
+            'genre': movie_data['genre'],
+            'language': movie_data['language'],
+            'code': movie_data['code'],
+            'video_file_id': movie_data['video_file_id'],
+        }
+        async with session.post(url, json=data) as resp:
+            if resp.status == 201:
+                return True
+            else:
+                logging.error(f"Error saving movie: {await resp.text()}")
+                return False
+
 
 def only_back_keyboard():
     # Implement this function to provide a keyboard with a back button
@@ -248,37 +290,36 @@ async def add_movie(message: Message):
 async def search_movie_by_code(message: Message):
     user_id = message.from_user.id
     movie_code = message.text.strip()
+    url = f'https://codermovie-admin-production.up.railway.app/api/v1/movies/?code={movie_code}'
 
-    try:
-        # Django modeli orqali asinxron kino qidiramiz
-        movie = await sync_to_async(Movie.objects.filter(code=movie_code).first)()
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            if response.status == 200:
+                movies = await response.json()
+                if movies:
+                    movie = movies[0]
+                    caption = (
+                        f"<b>🎬Nomi:</b> {movie['title']}\n"
+                        f"<b>📆Yili:</b> {movie['year']}\n"
+                        f"<b>🎞Janr:</b> {movie['genre']}\n"
+                        f"<b>🌍Tili:</b> {movie['language']}\n"
+                        f"<b>🗂Yuklash:</b> {movie['code']}\n\n"
+                        f"<b>🤖Bot:</b> @codermoviebot"
+                    )
 
-    except Exception as e:
-        logging.error(f"Database error: {e}")
-        await message.answer("Ma'lumotlar bazasiga ulanishda xatolik. Iltimos, keyinroq qayta urinib ko'ring.")
-        return
-
-    if movie:
-        caption = (
-            f"<b>🎬Nomi:</b> {movie.title}\n\n"
-            f"<b>📆Yili:</b> {movie.year}\n"
-            f"<b>🎞Janr:</b> {movie.genre}\n"
-            f"<b>🌍Tili:</b> {movie.language}\n"
-            f"<b>🗂Yuklash:</b> {movie.code}\n\n\n"
-            f"<b>🤖Bot:</b> @codermoviebot"
-        )
-
-        if movie.video_file_id:
-            try:
-                # Video faylni asinxron yuborish
-                await bot.send_video(chat_id=user_id, video=movie.video_file_id, caption=caption, parse_mode='HTML')
-            except Exception as e:
-                logging.error(f"Error sending video: {e}")
-                await message.answer("Videoni jo'natishda xatolik yuz berdi.")
-        else:
-            await message.answer("Kino videosi topilmadi.")
-    else:
-        await message.answer("Kino topilmadi. Iltimos, kodni to'g'ri kiriting yoki qayta urinib ko'ring.")
+                    if movie['video_file_id']:
+                        await bot.send_video(
+                            chat_id=message.chat.id,
+                            video=movie['video_file_id'],
+                            caption=caption,
+                            parse_mode='HTML'
+                        )
+                    else:
+                        await message.answer("Kino videosi topilmadi.")
+                else:
+                    await message.answer("Kino topilmadi.")
+            else:
+                await message.answer("Ma'lumotlar bazasiga ulanishda xatolik.")
 
     # Foydalanuvchidan yana kod kiritishini so'raymiz
     user_states[user_id] = {'state': 'searching_movie'}

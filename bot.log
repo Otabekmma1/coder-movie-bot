@@ -95,3 +95,94 @@ INFO:aiogram.event:Update id=217886744 is handled. Duration 421 ms by bot id=751
 INFO:aiogram.event:Update id=217886745 is handled. Duration 281 ms by bot id=7511166749
 INFO:aiogram.dispatcher:Polling stopped
 INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+ERROR:root:Failed to add/update user via API: 403
+ERROR:root:Failed to add/update user via API: 403
+ERROR:root:Failed to add/update user via API: 403
+ERROR:root:Failed to add/update user via API: 403
+ERROR:root:Failed to add/update user via API: 403
+ERROR:root:Failed to add/update user via API: 403
+ERROR:root:Failed to add/update user via API: 403
+ERROR:root:Failed to add/update user via API: 403
+INFO:aiogram.event:Update id=217886747 is handled. Duration 1171 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886746 is handled. Duration 1328 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886749 is handled. Duration 1203 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886753 is handled. Duration 1203 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886750 is handled. Duration 1233 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886752 is handled. Duration 1250 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886748 is handled. Duration 1265 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886751 is handled. Duration 1296 ms by bot id=7511166749
+ERROR:root:Failed to add/update user via API: 403
+INFO:aiogram.event:Update id=217886754 is handled. Duration 2157 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+ERROR:root:Failed to add/update user via API: 403
+INFO:aiogram.event:Update id=217886755 is handled. Duration 2828 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+ERROR:root:Failed to add/update user via API: 403
+INFO:aiogram.event:Update id=217886756 is handled. Duration 3078 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+ERROR:root:Failed to add/update user via API: 400
+INFO:aiogram.event:Update id=217886757 is handled. Duration 2108 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+ERROR:root:Failed to add/update user via API: 400
+INFO:aiogram.event:Update id=217886758 is handled. Duration 2608 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+ERROR:root:Failed to add/update user via API: 400
+INFO:aiogram.event:Update id=217886759 is handled. Duration 2328 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+ERROR:root:Failed to add/update user via API: 400 - {"telegram_id":["user with this telegram id already exists."]}
+ERROR:root:Failed to add/update user via API: 400
+INFO:aiogram.event:Update id=217886760 is handled. Duration 2219 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+ERROR:root:Failed to update user via API: 405
+INFO:aiogram.event:Update id=217886761 is handled. Duration 1421 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+ERROR:root:Failed to update user via API: 405
+INFO:aiogram.event:Update id=217886762 is handled. Duration 3358 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+ERROR:root:Failed to update user via API: 404
+INFO:aiogram.event:Update id=217886763 is handled. Duration 3172 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:aiogram.dispatcher:Start polling
+INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+INFO:root:User otabek_mma1 already exists. Skipping creation.
+INFO:aiogram.event:Update id=217886764 is handled. Duration 2327 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886765 is handled. Duration 312 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886766 is handled. Duration 312 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886767 is handled. Duration 250 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886768 is handled. Duration 421 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886769 is handled. Duration 250 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886770 is handled. Duration 358 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886771 is handled. Duration 280 ms by bot id=7511166749
+INFO:aiogram.event:Update id=217886772 is handled. Duration 4312 ms by bot id=7511166749
+INFO:aiogram.dispatcher:Polling stopped
+INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
