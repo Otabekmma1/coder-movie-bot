@@ -1,14 +1,10 @@
 import asyncio
 import logging
 import sys
-import django
-import os
-import aiohttp
 from aiogram import Bot, Dispatcher
 from aiogram.filters import CommandStart
 from aiogram.types import  Message, InlineKeyboardMarkup, InlineKeyboardButton, \
     CallbackQuery, ReplyKeyboardMarkup, KeyboardButton
-from asgiref.sync import sync_to_async
 
 
 
@@ -42,13 +38,15 @@ async def check_subscription(user_id):
             for channel in channels:
                 try:
                     # Check if the user is a member of the channel
-                    chat_member = await bot.get_chat_member(chat_id=channel['channel_url'], user_id=user_id)
+                    chat_id = channel['channel_url']
+                    chat_member = await bot.get_chat_member(chat_id=chat_id, user_id=user_id)
                     if chat_member.status in ['left', 'kicked']:
                         return False
                 except Exception as e:
                     logging.error(f"Error checking subscription for channel {channel['channel_name']}: {e}")
                     return False
     return True
+
 
 
 
@@ -70,13 +68,12 @@ async def get_inline_keyboard_for_channels():
             inline_keyboard = []
             for channel in channels:
                 # Assuming `channel_name` and `channel_url` are fields in your Django model
-                inline_keyboard.append([InlineKeyboardButton(text=f"{channel.channel_name}", url=channel.channel_url)])
+                inline_keyboard.append([InlineKeyboardButton(text=f"{channel['channel_name']}", url=channel['channel_url'])])
 
             # Add "A'zo bo'ldim" button
             inline_keyboard.append([InlineKeyboardButton(text="A'zo bo'ldim", callback_data='azo')])
 
             return InlineKeyboardMarkup(inline_keyboard=inline_keyboard)
-
 
 
 
@@ -88,26 +85,22 @@ async def delete_previous_inline_message(chat_id, message_id):
 
 import aiohttp
 
+
 @dp.message(CommandStart())
 async def start(message: Message):
     user_id = message.from_user.id
     username = message.from_user.username
 
-    # API URL to create or update the user in your Django backend
-    url = 'https://codermovie-admin-production.up.railway.app/api/v1/users/'
-
-    # Prepare the user data payload
+    url = 'http://localhost:8000/api/v1/users/'
     payload = {
         'telegram_id': user_id,
         'username': username,
     }
-
     headers = {
-        'Authorization': f'Bearer YOUR_API_TOKEN',  # Replace YOUR_API_TOKEN with your actual token
+        'Authorization': f'Bearer {TOKEN}',
         'Content-Type': 'application/json'
     }
 
-    # Try to create the user
     async with aiohttp.ClientSession() as session:
         try:
             async with session.post(url, json=payload, headers=headers) as response:
@@ -130,13 +123,10 @@ async def start(message: Message):
             await message.answer("Foydalanuvchini qo'shishda xatolik yuz berdi.")
             return
 
-    # Ensure the user is subscribed to the required channels
     if not await ensure_subscription(message):
-        return  # Stop further execution if the user is not subscribed
+        return
 
-    # Call the main command handler after registration and subscription check
     await command_start_handler(message, message.from_user.first_name)
-
 
 async def send_subscription_prompt(message: Message):
     user_id = message.from_user.id
@@ -216,12 +206,12 @@ async def save_movie_to_db(user_id):
 
     async with aiohttp.ClientSession() as session:
         data = {
-            'title': movie_data['title'],
-            'year': movie_data['year'],
-            'genre': movie_data['genre'],
-            'language': movie_data['language'],
-            'code': movie_data['code'],
-            'video_file_id': movie_data['video_file_id'],
+            'title': movie_data.get('title'),
+            'year': movie_data.get('year'),
+            'genre': movie_data.get('genre'),
+            'language': movie_data.get('language'),
+            'code': movie_data.get('code'),
+            'video_file_id': movie_data.get('video_file_id'),
         }
         async with session.post(url, json=data) as resp:
             if resp.status == 201:
@@ -229,7 +219,6 @@ async def save_movie_to_db(user_id):
             else:
                 logging.error(f"Error saving movie: {await resp.text()}")
                 return False
-
 
 def only_back_keyboard():
     # Implement this function to provide a keyboard with a back button
