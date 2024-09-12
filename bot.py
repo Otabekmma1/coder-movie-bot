@@ -103,18 +103,8 @@ async def callback_handler(callback_query: CallbackQuery):
             try:
                 # Foydalanuvchini tekshirib ko'ramiz
                 async with session.get(user_url, headers=headers) as response:
-                    if response.status == 200:
-                        # Foydalanuvchi mavjud, yangilashni amalga oshiramiz
-                        payload = {'username': username if username else ''}
-                        async with session.put(user_url, json=payload, headers=headers) as update_response:
-                            if update_response.status == 200:
-                                logging.info(f"User {username} data updated successfully.")
-                            else:
-                                logging.error(
-                                    f"Failed to update user data: {update_response.status} - {await update_response.text()}")
-                                await callback_query.message.answer("Foydalanuvchini yangilashda xatolik yuz berdi.")
-                                return
-                    elif response.status == 404:
+
+                    if response.status == 404:
                         # Foydalanuvchi mavjud emas, yangi foydalanuvchi qo'shamiz
                         payload = {
                             'telegram_id': user_id,
@@ -177,17 +167,7 @@ async def start(message: Message):
                 elif response.status == 400:
                     response_text = await response.text()
                     if "user with this telegram id already exists" in response_text:
-                        logging.info(f"User {username} already exists. Updating data.")
-
-                        # If the user exists, send a PUT request to update the username
-                        update_url = f'{url}{user_id}/'
-                        async with session.put(update_url, json=payload, headers=headers) as update_response:
-                            if update_response.status == 200:
-                                logging.info(f"User {username} data updated successfully.")
-                            else:
-                                logging.error(f"Failed to update user data: {update_response.status}")
-                                await message.answer("Foydalanuvchini yangilashda xatolik yuz berdi.")
-                                return
+                        logging.info(f"User {username} already exists")
                     else:
                         logging.error(f"Failed to add user via API: {response.status} - {response_text}")
                         await message.answer("Foydalanuvchini qo'shishda xatolik yuz berdi.")
