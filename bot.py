@@ -122,6 +122,7 @@ async def callback_handler(callback_query: CallbackQuery):
                 logging.error(f"Error communicating with API: {e}")
                 await callback_query.message.answer("Foydalanuvchini qo'shishda xatolik yuz berdi.")
                 return
+        user_states[user_id] = {'state': 'searching_movie'}
 
         # `command_start_handler` funksiyasini chaqirish
         await command_start_handler(callback_query.message, callback_query.from_user.first_name)
