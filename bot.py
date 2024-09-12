@@ -84,13 +84,64 @@ async def send_subscription_prompt(message: Message):
     user_states[user_id] = user_states.get(user_id, {})
     user_states[user_id]['last_inline_message_id'] = sent_message.message_id
 
+
 @dp.callback_query(lambda c: c.data == 'azo')
 async def callback_handler(callback_query: CallbackQuery):
     user_id = callback_query.from_user.id
+    username = callback_query.from_user.username
+
     if await check_subscription(user_id):
-        await start(callback_query.message)
+        # Foydalanuvchini `users` ro'yxatiga qo'shish yoki yangilash
+        url = 'https://protected-wave-24975-ac981f81033d.herokuapp.com/api/v1/users/'
+        user_url = f'{url}{user_id}/'
+        headers = {
+            'Authorization': f'Bearer {TOKEN}',
+            'Content-Type': 'application/json'
+        }
+
+        async with aiohttp.ClientSession() as session:
+            try:
+                # Foydalanuvchini tekshirib ko'ramiz
+                async with session.get(user_url, headers=headers) as response:
+                    if response.status == 200:
+                        # Foydalanuvchi mavjud, yangilashni amalga oshiramiz
+                        payload = {'username': username if username else ''}
+                        async with session.put(user_url, json=payload, headers=headers) as update_response:
+                            if update_response.status == 200:
+                                logging.info(f"User {username} data updated successfully.")
+                            else:
+                                logging.error(
+                                    f"Failed to update user data: {update_response.status} - {await update_response.text()}")
+                                await callback_query.message.answer("Foydalanuvchini yangilashda xatolik yuz berdi.")
+                                return
+                    elif response.status == 404:
+                        # Foydalanuvchi mavjud emas, yangi foydalanuvchi qo'shamiz
+                        payload = {
+                            'telegram_id': user_id,
+                            'username': username if username else '',
+                        }
+                        async with session.post(url, json=payload, headers=headers) as add_response:
+                            if add_response.status == 201:
+                                logging.info(f"User {username} successfully added via API.")
+                            else:
+                                logging.error(
+                                    f"Failed to add user via API: {add_response.status} - {await add_response.text()}")
+                                await callback_query.message.answer("Foydalanuvchini qo'shishda xatolik yuz berdi.")
+                                return
+                    else:
+                        logging.error(f"Failed to retrieve user data: {response.status}")
+                        await callback_query.message.answer("Foydalanuvchini tekshirishda xatolik yuz berdi.")
+                        return
+            except Exception as e:
+                logging.error(f"Error communicating with API: {e}")
+                await callback_query.message.answer("Foydalanuvchini qo'shishda xatolik yuz berdi.")
+                return
+
+        # `command_start_handler` funksiyasini chaqirish
+        await command_start_handler(callback_query.message, callback_query.from_user.first_name)
     else:
         await send_subscription_prompt(callback_query.message)
+
 
 async def delete_previous_inline_message(chat_id, message_id):
     try:
