@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import aiohttp
 import sys
 from aiogram import Bot, Dispatcher
 from aiogram.filters import CommandStart
@@ -25,30 +26,23 @@ logging.basicConfig(level=logging.INFO, handlers=[
 
 user_states = {}
 
-
-
-# Utility functions
 async def check_subscription(user_id):
-    url = 'https://codermovie-admin-production.up.railway.app/api/v1/channels/'
+    url = 'https://protected-wave-24975-ac981f81033d.herokuapp.com/api/v1/channels/'  # Kanallar API manzili
 
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             channels = await response.json()
 
-            for channel in channels:
-                try:
-                    # Check if the user is a member of the channel
-                    chat_id = channel['channel_url']
-                    chat_member = await bot.get_chat_member(chat_id=chat_id, user_id=user_id)
-                    if chat_member.status in ['left', 'kicked']:
-                        return False
-                except Exception as e:
-                    logging.error(f"Error checking subscription for channel {channel['channel_name']}: {e}")
-                    return False
+    for channel in channels:
+        try:
+            chat_id = channel['channel_id']
+            chat_member = await bot.get_chat_member(chat_id=chat_id, user_id=user_id)
+            if chat_member.status in ['left', 'kicked']:
+                return False
+        except Exception as e:
+            logging.error(f"Error checking subscription for channel {channel['channel_id']}: {e}")
+            return False
     return True
-
-
-
 
 async def ensure_subscription(message: Message):
     user_id = message.from_user.id
@@ -60,22 +54,43 @@ async def ensure_subscription(message: Message):
     return True  # User is subscribed
 
 async def get_inline_keyboard_for_channels():
-    url = 'https://codermovie-admin-production.up.railway.app/api/v1/channels/'
+    url = 'https://protected-wave-24975-ac981f81033d.herokuapp.com/api/v1/channels/'  # Kanallar API manzili
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             channels = await response.json()
 
-            inline_keyboard = []
-            for channel in channels:
-                # Assuming `channel_name` and `channel_url` are fields in your Django model
-                inline_keyboard.append([InlineKeyboardButton(text=f"{channel['channel_name']}", url=channel['channel_url'])])
+    inline_keyboard = []
+    for channel in channels:
+        channel_name = channel['name']
+        channel_url = channel['url']
+        inline_keyboard.append([InlineKeyboardButton(text=f"{channel_name}", url=channel_url)])
 
-            # Add "A'zo bo'ldim" button
-            inline_keyboard.append([InlineKeyboardButton(text="A'zo bo'ldim", callback_data='azo')])
+    # "A'zo bo'ldim" button
+    inline_keyboard.append([InlineKeyboardButton(text="A'zo bo'ldim", callback_data='azo')])
 
-            return InlineKeyboardMarkup(inline_keyboard=inline_keyboard)
+    return InlineKeyboardMarkup(inline_keyboard=inline_keyboard)
 
+async def send_subscription_prompt(message: Message):
+    user_id = message.from_user.id
 
+    # Remove old inline keyboard if exists
+    if 'last_inline_message_id' in user_states.get(user_id, {}):
+        await delete_previous_inline_message(message.chat.id, user_states[user_id]['last_inline_message_id'])
+
+    inline_keyboard = await get_inline_keyboard_for_channels()
+    sent_message = await message.answer("Botdan foydalanish uchun quyidagi kanallarga obuna bo'ling:", reply_markup=inline_keyboard)
+
+    # Store the message ID for future reference
+    user_states[user_id] = user_states.get(user_id, {})
+    user_states[user_id]['last_inline_message_id'] = sent_message.message_id
+
+@dp.callback_query(lambda c: c.data == 'azo')
+async def callback_handler(callback_query: CallbackQuery):
+    user_id = callback_query.from_user.id
+    if await check_subscription(user_id):
+        await command_start_handler(callback_query.message, callback_query.from_user.first_name)
+    else:
+        await send_subscription_prompt(callback_query.message)
 
 async def delete_previous_inline_message(chat_id, message_id):
     try:
@@ -83,15 +98,16 @@ async def delete_previous_inline_message(chat_id, message_id):
     except Exception as e:
         logging.error(f"Failed to delete previous inline message: {e}")
 
-import aiohttp
-
-
 @dp.message(CommandStart())
 async def start(message: Message):
     user_id = message.from_user.id
     username = message.from_user.username
 
-    url = 'http://localhost:8000/api/v1/users/'
+    # Obuna holatini tekshiramiz
+    if not await ensure_subscription(message):
+        return
+
+    url = 'https://protected-wave-24975-ac981f81033d.herokuapp.com/api/v1/users/'
     payload = {
         'telegram_id': user_id,
         'username': username,
@@ -123,33 +139,8 @@ async def start(message: Message):
             await message.answer("Foydalanuvchini qo'shishda xatolik yuz berdi.")
             return
 
-    if not await ensure_subscription(message):
-        return
-
     await command_start_handler(message, message.from_user.first_name)
 
-async def send_subscription_prompt(message: Message):
-    user_id = message.from_user.id
-
-    # Remove old inline keyboard if exists
-    if 'last_inline_message_id' in user_states.get(user_id, {}):
-        await delete_previous_inline_message(message.chat.id, user_states[user_id]['last_inline_message_id'])
-
-    inline_keyboard = get_inline_keyboard_for_channels()
-    sent_message = await message.answer("Botdan foydalanish uchun quyidagi kanallarga obuna bo'ling:", reply_markup=inline_keyboard)
-
-    # Store the message ID for future reference
-    user_states[user_id] = user_states.get(user_id, {})
-    user_states[user_id]['last_inline_message_id'] = sent_message.message_id
-
-
-@dp.callback_query(lambda c: c.data == 'azo')
-async def callback_handler(callback_query: CallbackQuery):
-    user_id = callback_query.from_user.id
-    if await check_subscription(user_id):
-        await command_start_handler(callback_query.message, callback_query.from_user.first_name)
-    else:
-        await send_subscription_prompt(callback_query.message)
 
 async def command_start_handler(message: Message, first_name: str):
     user_id = message.from_user.id
@@ -157,14 +148,14 @@ async def command_start_handler(message: Message, first_name: str):
     if await check_subscription(user_id):
         is_admin = user_id in ADMINS
 
-        # Create admin buttons if the user is an admin
+        # Admin uchun tugmalarni yaratamiz
         admin_buttons = []
         if is_admin:
             admin_buttons = [
                 [KeyboardButton(text="➕ Kino qo'shish")],
             ]
 
-        # Create the main keyboard with admin buttons if applicable
+        # Asosiy keyboard
         keyboard = ReplyKeyboardMarkup(
             keyboard=[
                 [KeyboardButton(text="🤖 Telegram bot yasatish")],
@@ -176,7 +167,6 @@ async def command_start_handler(message: Message, first_name: str):
         await message.answer(f"<b>👋Salom {first_name}</b>\n\n<i>Kino kodini kiriting...</i>", reply_markup=keyboard, parse_mode='html')
     else:
         await send_subscription_prompt(message)
-
 
 @dp.message(lambda message: message.text == "➕ Kino qo'shish")
 async def add_movie_start(message: Message):
@@ -202,7 +192,7 @@ async def save_movie_to_db(user_id):
     if not movie_data:
         return False
 
-    url = 'https://codermovie-admin-production.up.railway.app/api/v1/movies/'
+    url = 'https://protected-wave-24975-ac981f81033d.herokuapp.com/api/v1/movies/'
 
     async with aiohttp.ClientSession() as session:
         data = {
@@ -278,8 +268,10 @@ async def add_movie(message: Message):
 
 async def search_movie_by_code(message: Message):
     user_id = message.from_user.id
+    if not await ensure_subscription(message):
+        return
     movie_code = message.text.strip()
-    url = f'https://codermovie-admin-production.up.railway.app/api/v1/movies/?code={movie_code}'
+    url = f'http://protected-wave-24975-ac981f81033d.herokuapp.com/api/v1/movies/?code={movie_code}'
 
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:

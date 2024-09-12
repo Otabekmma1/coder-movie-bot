@@ -1,212 +1,134 @@
 INFO:aiogram.dispatcher:Start polling
 INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-WARNING:aiogram.dispatcher:Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7511166749)
-ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-WARNING:aiogram.dispatcher:Sleep for 1.287578 seconds and try again... (tryings = 1, bot id = 7511166749)
-ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-WARNING:aiogram.dispatcher:Sleep for 1.800922 seconds and try again... (tryings = 2, bot id = 7511166749)
-ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-WARNING:aiogram.dispatcher:Sleep for 2.578353 seconds and try again... (tryings = 3, bot id = 7511166749)
-INFO:aiogram.dispatcher:Connection established (tryings = 4, bot id = 7511166749)
-INFO:aiogram.event:Update id=217886712 is handled. Duration 1969 ms by bot id=7511166749
-ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+INFO:aiogram.event:Update id=217886998 is not handled. Duration 122577 ms by bot id=7511166749
+ERROR:aiogram.event:Cause exception while process update id=217886998 by bot id=7511166749
+TypeError: string indices must be integers, not 'str'
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\codermoviebot\bot.py", line 38, in check_subscription
+    chat_id = channel['channel_id']
+              ~~~~~~~^^^^^^^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 309, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 158, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 56, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\fsm\middleware.py", line 42, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 276, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\router.py", line 142, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\router.py", line 137, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\router.py", line 162, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\codermoviebot\bot.py", line 107, in start
+    if not await ensure_subscription(message):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\codermoviebot\bot.py", line 50, in ensure_subscription
+    if not await check_subscription(user_id):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\codermoviebot\bot.py", line 43, in check_subscription
+    logging.error(f"Error checking subscription for channel {channel['channel_id']}: {e}")
+                                                             ~~~~~~~^^^^^^^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+INFO:aiogram.event:Update id=217886999 is not handled. Duration 122187 ms by bot id=7511166749
+ERROR:aiogram.event:Cause exception while process update id=217886999 by bot id=7511166749
+TypeError: string indices must be integers, not 'str'
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\codermoviebot\bot.py", line 38, in check_subscription
+    chat_id = channel['channel_id']
+              ~~~~~~~^^^^^^^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 309, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 158, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\middlewares\error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\middlewares\user_context.py", line 56, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\fsm\middleware.py", line 42, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\dispatcher.py", line 276, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\router.py", line 142, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\router.py", line 137, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\router.py", line 162, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\event\telegram.py", line 121, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiogram\dispatcher\event\handler.py", line 43, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\codermoviebot\bot.py", line 107, in start
+    if not await ensure_subscription(message):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\codermoviebot\bot.py", line 50, in ensure_subscription
+    if not await check_subscription(user_id):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\codermoviebot\bot.py", line 43, in check_subscription
+    logging.error(f"Error checking subscription for channel {channel['channel_id']}: {e}")
+                                                             ~~~~~~~^^^^^^^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramNetworkError: HTTP Client says - Request timeout error
 WARNING:aiogram.dispatcher:Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7511166749)
 INFO:aiogram.dispatcher:Connection established (tryings = 1, bot id = 7511166749)
-INFO:aiogram.event:Update id=217886714 is handled. Duration 453 ms by bot id=7511166749
-ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramNetworkError: HTTP Client says - Request timeout error
 WARNING:aiogram.dispatcher:Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 7511166749)
-ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-WARNING:aiogram.dispatcher:Sleep for 1.341124 seconds and try again... (tryings = 1, bot id = 7511166749)
-ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-WARNING:aiogram.dispatcher:Sleep for 1.849626 seconds and try again... (tryings = 2, bot id = 7511166749)
-ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramConflictError: Telegram server says - Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
-WARNING:aiogram.dispatcher:Sleep for 2.372240 seconds and try again... (tryings = 3, bot id = 7511166749)
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.event:Update id=217886715 is not handled. Duration 0 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886716 is not handled. Duration 0 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.event:Update id=217886717 is handled. Duration 828 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886718 is handled. Duration 406 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886719 is handled. Duration 327 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886720 is handled. Duration 578 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886721 is handled. Duration 1562 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.event:Update id=217886722 is handled. Duration 2639 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.event:Update id=217886723 is handled. Duration 2250 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886724 is handled. Duration 328 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886725 is handled. Duration 296 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.event:Update id=217886726 is handled. Duration 421 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886727 is handled. Duration 500 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886728 is handled. Duration 187 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886729 is handled. Duration 296 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886730 is handled. Duration 343 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886731 is handled. Duration 280 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.event:Update id=217886732 is handled. Duration 453 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.event:Update id=217886733 is handled. Duration 484 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.event:Update id=217886734 is handled. Duration 2000 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886735 is handled. Duration 469 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.event:Update id=217886736 is handled. Duration 405 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886737 is handled. Duration 280 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886738 is handled. Duration 171 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886739 is handled. Duration 156 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886740 is handled. Duration 500 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886741 is handled. Duration 858 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886742 is handled. Duration 484 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886743 is handled. Duration 3467 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.event:Update id=217886744 is handled. Duration 421 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886745 is handled. Duration 281 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-ERROR:root:Failed to add/update user via API: 403
-ERROR:root:Failed to add/update user via API: 403
-ERROR:root:Failed to add/update user via API: 403
-ERROR:root:Failed to add/update user via API: 403
-ERROR:root:Failed to add/update user via API: 403
-ERROR:root:Failed to add/update user via API: 403
-ERROR:root:Failed to add/update user via API: 403
-ERROR:root:Failed to add/update user via API: 403
-INFO:aiogram.event:Update id=217886747 is handled. Duration 1171 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886746 is handled. Duration 1328 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886749 is handled. Duration 1203 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886753 is handled. Duration 1203 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886750 is handled. Duration 1233 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886752 is handled. Duration 1250 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886748 is handled. Duration 1265 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886751 is handled. Duration 1296 ms by bot id=7511166749
-ERROR:root:Failed to add/update user via API: 403
-INFO:aiogram.event:Update id=217886754 is handled. Duration 2157 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-ERROR:root:Failed to add/update user via API: 403
-INFO:aiogram.event:Update id=217886755 is handled. Duration 2828 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-ERROR:root:Failed to add/update user via API: 403
-INFO:aiogram.event:Update id=217886756 is handled. Duration 3078 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-ERROR:root:Failed to add/update user via API: 400
-INFO:aiogram.event:Update id=217886757 is handled. Duration 2108 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-ERROR:root:Failed to add/update user via API: 400
-INFO:aiogram.event:Update id=217886758 is handled. Duration 2608 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-ERROR:root:Failed to add/update user via API: 400
-INFO:aiogram.event:Update id=217886759 is handled. Duration 2328 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-ERROR:root:Failed to add/update user via API: 400 - {"telegram_id":["user with this telegram id already exists."]}
-ERROR:root:Failed to add/update user via API: 400
-INFO:aiogram.event:Update id=217886760 is handled. Duration 2219 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-ERROR:root:Failed to update user via API: 405
-INFO:aiogram.event:Update id=217886761 is handled. Duration 1421 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-ERROR:root:Failed to update user via API: 405
-INFO:aiogram.event:Update id=217886762 is handled. Duration 3358 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-ERROR:root:Failed to update user via API: 404
-INFO:aiogram.event:Update id=217886763 is handled. Duration 3172 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:root:User otabek_mma1 already exists. Skipping creation.
-INFO:aiogram.event:Update id=217886764 is handled. Duration 2327 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886765 is handled. Duration 312 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886766 is handled. Duration 312 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886767 is handled. Duration 250 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886768 is handled. Duration 421 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886769 is handled. Duration 250 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886770 is handled. Duration 358 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886771 is handled. Duration 280 ms by bot id=7511166749
-INFO:aiogram.event:Update id=217886772 is handled. Duration 4312 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-ERROR:root:Failed to add user via API: 500
-INFO:aiogram.event:Update id=217886797 is handled. Duration 1360 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-ERROR:root:Failed to add user via API: 500
-INFO:aiogram.event:Update id=217886798 is handled. Duration 2969 ms by bot id=7511166749
-ERROR:root:Failed to add user via API: 500
-INFO:aiogram.event:Update id=217886799 is handled. Duration 2186 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.event:Update id=217886800 is handled. Duration 2546 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.dispatcher:Start polling
-INFO:aiogram.dispatcher:Run polling for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
-INFO:aiogram.event:Update id=217886801 is handled. Duration 2750 ms by bot id=7511166749
-INFO:aiogram.dispatcher:Polling stopped
-INFO:aiogram.dispatcher:Polling stopped for bot @codermoviebot id=7511166749 - 'CoderMovieBot'
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Превышен таймаут семафора]
+WARNING:aiogram.dispatcher:Sleep for 1.442247 seconds and try again... (tryings = 1, bot id = 7511166749)
+ERROR:aiogram.dispatcher:Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Указанное сетевое имя более недоступно]
+WARNING:aiogram.dispatcher:Sleep for 1.924006 seconds and try again... (tryings = 2, bot id = 7511166749)
+INFO:aiogram.dispatcher:Connection established (tryings = 3, bot id = 7511166749)
