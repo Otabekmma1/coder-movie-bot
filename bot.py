@@ -98,6 +98,7 @@ async def delete_previous_inline_message(chat_id, message_id):
     except Exception as e:
         logging.error(f"Failed to delete previous inline message: {e}")
 
+
 @dp.message(CommandStart())
 async def start(message: Message):
     user_id = message.from_user.id
@@ -125,7 +126,17 @@ async def start(message: Message):
                 elif response.status == 400:
                     response_text = await response.text()
                     if "user with this telegram id already exists" in response_text:
-                        logging.info(f"User {username} already exists. Skipping creation.")
+                        logging.info(f"User {username} already exists. Updating data.")
+
+                        # If the user exists, send a PUT request to update the username
+                        update_url = f'{url}{user_id}/'
+                        async with session.put(update_url, json=payload, headers=headers) as update_response:
+                            if update_response.status == 200:
+                                logging.info(f"User {username} data updated successfully.")
+                            else:
+                                logging.error(f"Failed to update user data: {update_response.status}")
+                                await message.answer("Foydalanuvchini yangilashda xatolik yuz berdi.")
+                                return
                     else:
                         logging.error(f"Failed to add user via API: {response.status} - {response_text}")
                         await message.answer("Foydalanuvchini qo'shishda xatolik yuz berdi.")
@@ -138,8 +149,9 @@ async def start(message: Message):
             logging.error(f"Error communicating with API: {e}")
             await message.answer("Foydalanuvchini qo'shishda xatolik yuz berdi.")
             return
-    user_states[user_id] = {'state': 'searching_movie'}
 
+    # Set the user state to 'searching_movie' after adding/updating the user
+    user_states[user_id] = {'state': 'searching_movie'}
     await command_start_handler(message, message.from_user.first_name)
 
 
