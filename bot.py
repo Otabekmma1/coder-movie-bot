@@ -138,6 +138,7 @@ async def start(message: Message):
             logging.error(f"Error communicating with API: {e}")
             await message.answer("Foydalanuvchini qo'shishda xatolik yuz berdi.")
             return
+    user_states[user_id] = {'state': 'searching_movie'}
 
     await command_start_handler(message, message.from_user.first_name)
 
