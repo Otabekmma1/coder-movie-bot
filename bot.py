@@ -11,7 +11,7 @@ from aiogram.types import  Message, InlineKeyboardMarkup, InlineKeyboardButton, 
 
 
 
-TOKEN = "7511166749:AAEXfRoxFc-LD2UYSb5HczJY8i-3oUCQVSY"
+TOKEN = "7511166749:AAF08oX2S5yxA65-4HTQffSfPiXWVgd8VHs"
 ADMINS = [5541564692]
 
 bot = Bot(token=TOKEN)
