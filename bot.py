@@ -93,34 +93,30 @@ async def callback_handler(callback_query: CallbackQuery):
     if await check_subscription(user_id):
         # Foydalanuvchini `users` ro'yxatiga qo'shish yoki yangilash
         url = 'https://protected-wave-24975-ac981f81033d.herokuapp.com/api/v1/users/'
-        user_url = f'{url}{user_id}/'
         headers = {
             'Authorization': f'Bearer {TOKEN}',
             'Content-Type': 'application/json'
         }
-
+        payload = {
+            'telegram_id': user_id,
+            'username': username,
+        }
         async with aiohttp.ClientSession() as session:
             try:
-                # Foydalanuvchini tekshirib ko'ramiz
-                async with session.get(user_url, headers=headers) as response:
-
-                    if response.status == 404:
-                        # Foydalanuvchi mavjud emas, yangi foydalanuvchi qo'shamiz
-                        payload = {
-                            'telegram_id': user_id,
-                            'username': username if username else '',
-                        }
-                        async with session.post(url, json=payload, headers=headers) as add_response:
-                            if add_response.status == 201:
-                                logging.info(f"User {username} successfully added via API.")
-                            else:
-                                logging.error(
-                                    f"Failed to add user via API: {add_response.status} - {await add_response.text()}")
-                                await callback_query.message.answer("Foydalanuvchini qo'shishda xatolik yuz berdi.")
-                                return
+                async with session.post(url, json=payload, headers=headers) as response:
+                    if response.status == 201:
+                        logging.info(f"User {username} successfully added via API.")
+                    elif response.status == 400:
+                        response_text = await response.text()
+                        if "user with this telegram id already exists" in response_text:
+                            logging.info(f"User {username} already exists")
+                        else:
+                            logging.error(f"Failed to add user via API: {response.status} - {response_text}")
+                            await callback_query.message.answer("Foydalanuvchini qo'shishda xatolik yuz berdi.")
+                            return
                     else:
-                        logging.error(f"Failed to retrieve user data: {response.status}")
-                        await callback_query.message.answer("Foydalanuvchini tekshirishda xatolik yuz berdi.")
+                        logging.error(f"Failed to add user via API: {response.status}")
+                        await callback_query.message.answer("Foydalanuvchini qo'shishda xatolik yuz berdi.")
                         return
             except Exception as e:
                 logging.error(f"Error communicating with API: {e}")
