@@ -66,7 +66,7 @@ async def get_inline_keyboard_for_channels():
         inline_keyboard.append([InlineKeyboardButton(text=f"{channel_name}", url=channel_url)])
 
     # "A'zo bo'ldim" button
-    inline_keyboard.append([InlineKeyboardButton(text="A'zo bo'ldim", callback_data='azo')])
+    inline_keyboard.append([InlineKeyboardButton(text="✅A'zo bo'ldim", callback_data='azo')])
 
     return InlineKeyboardMarkup(inline_keyboard=inline_keyboard)
 
@@ -88,7 +88,7 @@ async def send_subscription_prompt(message: Message):
 async def callback_handler(callback_query: CallbackQuery):
     user_id = callback_query.from_user.id
     if await check_subscription(user_id):
-        await command_start_handler(callback_query.message, callback_query.from_user.first_name)
+        await start(callback_query.message)
     else:
         await send_subscription_prompt(callback_query.message)
 
