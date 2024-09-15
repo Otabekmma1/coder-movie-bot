@@ -8,6 +8,8 @@ from aiogram.types import  Message, InlineKeyboardMarkup, InlineKeyboardButton, 
     CallbackQuery, ReplyKeyboardMarkup, KeyboardButton
 
 
+from telethon import TelegramClient
+from telethon.errors import UserNotParticipantError, ChatAdminRequiredError
 
 
 
@@ -27,47 +29,56 @@ logging.basicConfig(level=logging.INFO, handlers=[
 user_states = {}
 
 
-async def check_subscription(user_id: int) -> bool:
+
+# Telethon bilan bog'lanish uchun kerakli ma'lumotlar
+api_id = 26423080  # O'zingizning Telethon API ID
+api_hash = '7aa642ddb10bc2248967ac699a156b78'  # O'zingizning Telethon API Hash
+phone_number = '+998913281102'  # O'zingizning telefon raqamingiz
+
+# Telethon clientini yaratamiz
+client = TelegramClient('session_name', api_id, api_hash)
+
+# Kanallarga obuna holatini tekshiradigan funksiya
+async def check_subscription(user_id):
+    # Kanallar API dan kanallarni olish
     url = 'https://protected-wave-24975-ac981f81033d.herokuapp.com/api/v1/channels/'  # Kanallar API manzili
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            channels = await response.json()
 
-    try:
-        # API orqali barcha kanallarni olish
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
-                channels = await response.json()
-
-        # Har bir kanal uchun obuna holatini tekshirish
+    # Foydalanuvchi obunasini tekshirish
+    async with client:
         for channel in channels:
-            chat_id = channel['channel_id']
             try:
-                # Bot orqali kanal aʼzolik holatini tekshirish
-                member = await bot.get_chat_member(chat_id, user_id)
-
-                # Foydalanuvchi holatini olish
-                status = member.status
-
-                # Agar foydalanuvchi faol a'zo yoki admin bo'lsa, True qaytaradi
-                if status in ['member', 'administrator', 'creator']:
-                    return True
-                # Agar foydalanuvchi cheklangan holatda (restricted) bo'lsa, False qaytaradi
-                elif status == 'restricted':
+                chat_id = int(channel['channel_id'])
+                # Kanalga a'zo yoki yo'qligini tekshirish
+                try:
+                    # Foydalanuvchini kanal ishtirokchilari orasidan izlaymiz
+                    participant = await client.get_permissions(chat_id, user_id)
+                    if not participant:
+                        return False
+                except UserNotParticipantError:
+                    # Foydalanuvchi kanalda emas
                     return False
-                # Agar foydalanuvchi kanalni tark etgan bo'lsa (left), True qaytaradi
-                elif status == 'left':
-                    return True
-                # Agar foydalanuvchi haydalgan bo'lsa (kicked), False qaytaradi
-                elif status == 'kicked':
+                except ChatAdminRequiredError as e:
+                    logging.error(f"Kanal uchun admin huquqlari talab qilinmoqda: {e}")
                     return False
             except Exception as e:
-                logging.error(f"Error checking subscription for channel {chat_id}: {e}")
+                logging.error(f"Error checking subscription for channel {channel['channel_id']}: {e}")
                 return False
 
-    except Exception as e:
-        logging.error(f"Failed to fetch channels from API: {e}")
-        return False
+    # Foydalanuvchi barcha kanallarga a'zo bo'lsa True qaytariladi
+    return True
 
-    # Agar hech qanday obuna holati topilmasa False qaytaradi
-    return False
+# Foydalanuvchini majburiy obuna qilish uchun tekshirish
+async def ensure_subscription_with_telethon(message: Message):
+    user_id = message.from_user.id
+
+    if not await check_subscription(user_id):
+        # Agar foydalanuvchi obuna bo'lmagan bo'lsa, obuna bo'lish uchun so'rov yuboriladi
+        await send_subscription_prompt(message)
+        return False  # Foydalanuvchi obuna emas
+    return True  # Foydalanuvchi obuna bo'lgan
 
 async def ensure_subscription(message: Message):
     user_id = message.from_user.id
