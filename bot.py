@@ -26,23 +26,48 @@ logging.basicConfig(level=logging.INFO, handlers=[
 
 user_states = {}
 
-async def check_subscription(user_id):
+
+async def check_subscription(user_id: int) -> bool:
     url = 'https://protected-wave-24975-ac981f81033d.herokuapp.com/api/v1/channels/'  # Kanallar API manzili
 
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            channels = await response.json()
+    try:
+        # API orqali barcha kanallarni olish
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                channels = await response.json()
 
-    for channel in channels:
-        try:
+        # Har bir kanal uchun obuna holatini tekshirish
+        for channel in channels:
             chat_id = channel['channel_id']
-            chat_member = await bot.get_chat_member(chat_id=chat_id, user_id=user_id)
-            if chat_member.status in ['left', 'kicked']:
+            try:
+                # Bot orqali kanal aʼzolik holatini tekshirish
+                member = await bot.get_chat_member(chat_id, user_id)
+
+                # Foydalanuvchi holatini olish
+                status = member.status
+
+                # Agar foydalanuvchi faol a'zo yoki admin bo'lsa, True qaytaradi
+                if status in ['member', 'administrator', 'creator']:
+                    return True
+                # Agar foydalanuvchi cheklangan holatda (restricted) bo'lsa, False qaytaradi
+                elif status == 'restricted':
+                    return False
+                # Agar foydalanuvchi kanalni tark etgan bo'lsa (left), True qaytaradi
+                elif status == 'left':
+                    return True
+                # Agar foydalanuvchi haydalgan bo'lsa (kicked), False qaytaradi
+                elif status == 'kicked':
+                    return False
+            except Exception as e:
+                logging.error(f"Error checking subscription for channel {chat_id}: {e}")
                 return False
-        except Exception as e:
-            logging.error(f"Error checking subscription for channel {channel['channel_id']}: {e}")
-            return False
-    return True
+
+    except Exception as e:
+        logging.error(f"Failed to fetch channels from API: {e}")
+        return False
+
+    # Agar hech qanday obuna holati topilmasa False qaytaradi
+    return False
 
 async def ensure_subscription(message: Message):
     user_id = message.from_user.id
